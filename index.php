@@ -4,30 +4,19 @@ session_start();
 	include("mysqlconnect.php");
 	include("functions.php");
 
-
 	if($_SERVER['REQUEST_METHOD'] == "POST")
 	{
-		//something was posted
-		/*$user_name = $_POST['USERNAME'];
-		$password = $_POST['PASSWORD'];
-        $gender = $_POST['GENDER'];
-        $profession = $_POST['PROFESSION'];*/
-		
+		//accept and santinitise posted	data before proccessing
 		$user_name = mysqli_real_escape_string($con, $_POST['USERNAME']);
 		$password = mysqli_real_escape_string($con, $_POST['PASSWORD']);
         $gender = mysqli_real_escape_string($con, $_POST['GENDER']);
-        $profession = mysqli_real_escape_string($con, $_POST['PROFESSION']);
-		/*$user_name =htmlspecialchars($user_name);
-		$password=htmlspecialchars($password);
-		$gender=htmlspecialchars($gender);
-		$profession=htmlspecialchars($profession);*/
+		$profession = mysqli_real_escape_string($con, $_POST['PROFESSION']);
 		
-        
-
+		// only accept valid entries and none nuemeric username
 		if(!empty($user_name) && !empty($password) && !empty($gender) && !empty($profession)  && !is_numeric($user_name)) 
 		{
 
-			//save to database
+			//save data to database
 			$user_id = random_num(2);
 			$query = "insert into users (USERID, USERNAME, PASSWORD, GENDER, PROFESSION) values ('$user_id','$user_name','$password', '$gender','$profession')";
 
@@ -40,8 +29,6 @@ session_start();
 	    {
 		    echo "Invalid Entry!";
 	    }
-
-        
 	}
 ?>
 
